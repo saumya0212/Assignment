@@ -1,4 +1,5 @@
 package com.ECommerce.controller;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,52 +17,50 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ECommerce.product.Product;
 import com.ECommerce.productRepository.ProductRepository;
+import com.ECommerce.service.ProductService;
 
 
 @RestController
-
-@RequestMapping ("/api/products/") 
-public class ProductController{
+@RequestMapping("/api/products/")
+public class ProductController {
 @Autowired
 public ProductRepository productRepository;
+
 @Autowired
 public ProductService productService;
-
-//get All Data
-@GetMapping ("/getAllData")
-public List<Product> getAllProducts() {
-	return productRepository.findAll();
+    //get All Data
+@GetMapping("/getAllData")
+public List<Product> getAllProducts(){
+return productRepository.findAll();
 }
 //Get Data by Id
-@GetMapping("getProductById(id)")
+@GetMapping("getProductById/{id}")
 public ResponseEntity<Product> getProductById(@PathVariable long id) {
 Product product=productRepository.findById(id);
 return ResponseEntity.ok(product);
 }
 //create data
-@PostMapping ("/createProduct")
-public Product createProduct (@RequestBody Product product) {
+@PostMapping("/createProduct")
+public Product createProduct(@RequestBody Product product) {
 return productRepository.save(product);
 }
-
 // update data
-
-@PutMapping ("updateProduct/{id}")
-public ResponseEntity<Product> updateProduct (@PathVariable long id, @RequestBody Product productDetails) {
+@PutMapping("updateProduct/{id}")
+public ResponseEntity<Product> updateProduct(@PathVariable long id, @RequestBody Product productDetails) {
 Product product=productRepository.findById(id);
 product.setName(productDetails.getName());
-product.setDescription(productDetails.getDescription));
+product.setDescription(productDetails.getDescription());
 product.setPrice(productDetails.getPrice());
-product.setQuantity(productDetails.getQuantity));
-Product updateproduct=ProductRepository.save(product);
+product.setQuantity(productDetails.getQuantity());
+Product updateproduct=productRepository.save(product);
 return ResponseEntity.ok(updateproduct);
 }
+
 //Delete data
 @DeleteMapping("/deleteProduct")
-public ResponseEntity<Long> deleteProductById(@RequestParam("id") long id){
-	return new ResponseEntity<>(productService.deleteById(id),HttpStatus.ok);
+public ResponseEntity<Long > deleteProductById(@RequestParam("id") long id){
+return new ResponseEntity<>(productService.deleteById(id),HttpStatus.OK);
+
+
 }
-	
-
-
-
+}

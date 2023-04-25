@@ -1,6 +1,7 @@
 package com.ECommerce.dummy;
 
 public class ResponsiveProduct {
+	
 private long id;
 private String name;
 private String description;
